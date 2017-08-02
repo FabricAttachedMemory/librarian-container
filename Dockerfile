@@ -4,14 +4,12 @@ FROM bitnami/minideb:jessie
 WORKDIR /librarian_image
 
 #set up the proxy information in apt.conf and etc/environment 
-RUN echo "http_proxy=http://web-proxy.corp.hpecorp.net:8080/\nhttps_proxy=http://web-proxy.corp.hpecorp.net:8080/\nftp_proxy=http://web-proxy.corp.hpecorp.net:8080/" >> /etc/environment
-RUN echo "Acquire::http::proxy \"http://web-proxy.corp.hp.com:8080\"; Acquire::https::proxy \"http://web-proxy.corp.hp.com:8080\"; Acquire::ftp::proxy \"http://web-proxy.corp.hp.com:8080\";" >> /etc/apt/apt.conf
+RUN echo "http_proxy=<http proxy> \nhttps_proxy=<https proxy>\nftp_proxy=<ftp proxy>" >> /etc/environment
+RUN echo "Acquire::http::proxy \"<http proxy>\"; Acquire::https::proxy \"<https proxy>\"; Acquire::ftp::proxy \"<ftp proxy>";" >> /etc/apt/apt.conf
 
-#set build time proxy variables if you need to use the HPE proxy
-ARG HTTP_PROXY=http://web-proxy.corp.hpecorp.net:8080
-ARG HTTPS_PROXY=http://web-proxy.corp.hpecorp.net:8080
-
-
+#set build time proxy variables if you are behind a firewall
+ARG HTTP_PROXY=<http proxy>
+ARG HTTPS_PROXY=https proxy>
 #expose ports for TCP and communication
 EXPOSE 9093
 
