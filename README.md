@@ -7,3 +7,5 @@ Pre-built images and instructions on running the lib-container can be found on h
 Note: the pre-built images do not have the most updated version of the tm-librarian repository. 
 
 After the Docker image has completed building, do the following command "docker run -i -p 9093:9093 <name of image>". This will start the container, ask the user for information on how to setup the config files for the nodes and run the librarian. For further details and information on each command in the Dockerfile, please visit one of the websites above.
+
+blee bloop
