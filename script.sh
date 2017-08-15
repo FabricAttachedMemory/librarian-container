@@ -43,26 +43,35 @@ else
 	echo "[global]" >> "$name_of_file"
 	echo "node_count = $nodes" >> "$name_of_file"
 	echo "book_size_bytes = $book_size" >> "$name_of_file"
+	
+	if [[ "$yes_no" == "y" ]]; then
+		echo "nvm_size_per_node = $mem_size" >> "$name_of_file"
+		tm-librarian/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
+		tm-librarian/./librarian.py --db_file tm-librarian/"$db_file"
+		exit
+	else
 
 
-	#Loop to write .ini file
-	COUNTER=1
-	index=0
-	while true; do
-		if [ "$COUNTER" -gt "9" ]; then
-			echo "[node$COUNTER]" >>"$name_of_file"
-		else
-			echo "[node0$COUNTER]" >> "$name_of_file"
-		fi
-		echo "node_id = $COUNTER" >> "$name_of_file"
-		echo "nvm_size = ${sizes[$index]}" >> "$name_of_file"
-		if [ "$COUNTER" == "$nodes" ]; then
-			break
-		fi
-		let COUNTER+=1
-		let index+=1
-	done
+		#Loop to write .ini file if nodes won't have same amount of memory
+		COUNTER=1
+		index=0
+		while true; do
+			if [ "$COUNTER" -gt "9" ]; then
+				echo "[node$COUNTER]" >>"$name_of_file"
+			else
+				echo "[node0$COUNTER]" >> "$name_of_file"
+			fi
+			echo "node_id = $COUNTER" >> "$name_of_file"
+			echo "nvm_size = ${sizes[$index]}" >> "$name_of_file"
+			if [ "$COUNTER" == "$nodes" ]; then
+				break
+			fi
+			let COUNTER+=1
+			let index+=1
+		done
+	fi
 fi
 
 tm-librarian/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
 tm-librarian/./librarian.py --db_file tm-librarian/"$db_file" 
+exit
