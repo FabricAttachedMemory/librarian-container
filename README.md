@@ -31,3 +31,16 @@ Book for each node: 256B (B stands for book size bytes and relates to the amount
   If you downloaded Dockerfile.2, run the command: "docker run -it -p 9093:9093 <name of image>". Because you will be setting up the container yourself you need the '-t' flag to tell docker to give you a terminal for the container. Once in the container, make sure the directory you are in has the tm-librarian repo. Make a file called whatever you want that follows the format of the .ini file to be used by book_register.py. Look at the tm-librarian repo to see the format and how to run the commands for the Librarian
   
 5. Once the container has ran the librarian command, run a node from FAME. Run "cd /" and see that the directory lfs is lit up. If it is, the container was successful! Go ahead and start using the Librarian! If not, see that the versions of FAME and the Librarian are the same and make sure the info you entered for the .ini file is correct.
+
+
+***Notes***: If you have a file of your own and do not want the container to create one for you, there are a few options to add it to the container:
+
+ 1) Rebuild the container. Add a line to the Dockerfile using ADD or COPY. It will look like: COPY <filename>/librarian_image or whatever the WORKDIR is called
+  
+ 2) Docker has a cp command that allows users to copy files into their container without rebuilding the container. The command is docker cp foo.txt containerName:/librarian_image/foo.txt
+  This command will copy the file you want into th working directory of the librarian container called "librarian_image"
+  
+ 3) The last option is to use the -v option. This option in Docker allows users to mount volumes onto their containers when the container is run. The -v option also allows for files to be mounted. This can be done with the normal run command:
+  docker run -p 9093:9093 -it -v $(pwd)/filename:librarian_image imagename
+  All of the other options are the same when running the container. $(pwd) MUST be used before the filename so that Docker knows where to find it even if you are in that directory. "librarian_image" refers to the WORKDIR set in the Dockerfile. If WORKDIR was changed be sure to change it in the run command. Also make sure you put the correct name of the image you want to run. When the container runs, the file should be in WORKDIR and work the same with the script in the container.
+  
