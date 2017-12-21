@@ -41,6 +41,6 @@ Book for each node: 256B (B stands for book size bytes and relates to the amount
   This command will copy the file you want into th working directory of the librarian container called "librarian_image"
   
  3) The last option is to use the -v option. This option in Docker allows users to mount volumes onto their containers when the container is run. The -v option also allows for files to be mounted. This can be done with the normal run command:
-  docker run -p 9093:9093 -it -v $(pwd)/filename:librarian_image imagename
+  docker run -p 9093:9093 -it -v $(pwd)/filename:/librarian_image/filename imagename
   All of the other options are the same when running the container. $(pwd) MUST be used before the filename so that Docker knows where to find it even if you are in that directory. "librarian_image" refers to the WORKDIR set in the Dockerfile. If WORKDIR was changed be sure to change it in the run command. Also make sure you put the correct name of the image you want to run. When the container runs, the file should be in WORKDIR and work the same with the script in the container.
   
