@@ -20,7 +20,7 @@ RUN apt-get -qy install python3
 
 #Add the book_data/book_register/librarian automatic script to the workdir
 ADD script.sh /librarian_image
-
+RUN ["chmod", "+x", "./script.sh"]
 
 #pull the librarian from the FAME repo --> copy the librarian data into the container 
 RUN git clone https://github.com/FabricAttachedMemory/tm-librarian.git
