@@ -1,6 +1,7 @@
 #!/bin/bash
 #A script designed to write a .ini file for book_register.py, and finally run librarian.py
-
+pwd
+ls -al
 read -p "Enter the name of your .ini file: " name_of_file
 read -p "Enter your desired number of nodes: " nodes
 read -p "Enter book size bytes: " book_size 
@@ -31,11 +32,11 @@ read -p "Enter the name of your .db file: " db_file
 
 if [ -e "$name_of_file" ]; then 
 	if [ -e tm-librarian/"$db_file" ]; then
-		tm-librarian/./librarian.py --db_file tm-librarian/"$db_file"
+		tm-librarian/src/./librarian.py --db_file tm-librarian/"$db_file"
 		exit
 	else
-		tm-librarian/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
-		tm-librarian/./librarian.py --db_file tm-librarian/"$db_file"
+		tm-librarian/src/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
+		tm-librarian/src/./librarian.py --db_file tm-librarian/"$db_file"
 		exit
 	fi
 else
@@ -46,8 +47,8 @@ else
 	
 	if [[ "$yes_no" == "y" ]]; then
 		echo "nvm_size_per_node = $mem_size" >> "$name_of_file"
-		tm-librarian/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
-		tm-librarian/./librarian.py --db_file tm-librarian/"$db_file"
+		tm-librarian/src/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
+		tm-librarian/src/./librarian.py --db_file tm-librarian/"$db_file"
 		exit
 	else
 
@@ -72,6 +73,6 @@ else
 	fi
 fi
 
-tm-librarian/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
-tm-librarian/./librarian.py --db_file tm-librarian/"$db_file" 
+tm-librarian/src/./book_register.py -d tm-librarian/"$db_file" "$name_of_file"
+tm-librarian/src/./librarian.py --db_file tm-librarian/"$db_file" 
 exit
